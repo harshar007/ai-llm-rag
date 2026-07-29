@@ -1,3 +1,7 @@
+
+
+crtae project in jupiter python notebook 
+
 # Local AI Code Assistant — Project Plan
 ### Powered by Qwen 2.5 (local) + Optional Gemini API · Streamlit Planner UI
 
