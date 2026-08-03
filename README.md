@@ -200,6 +200,9 @@ graph TD
 ```
 ai llm rag/
 ├── ai_code_assistant.ipynb   # Main Jupyter Notebook containing full GUI & application logic
+├── Dockerfile                # Container definition for Jupyter & AI Code Assistant
+├── docker-compose.yml        # Docker Compose configuration with volume & host mapping
+├── .dockerignore             # Docker build exclusion rules
 ├── requirements.txt          # Python dependencies
 ├── .env.example              # Template environment file
 ├── .env                      # Active environment configuration (git-ignored)
@@ -267,6 +270,47 @@ GEMINI_MODEL=gemini-1.5-flash
 # Application Default Settings
 DEFAULT_ENGINE=local
 APP_TITLE=AI Code Planner
+```
+
+---
+
+## 🐳 Docker Setup & Containerization
+
+You can run the entire Jupyter GUI environment inside a isolated Docker container with zero setup of local Python virtual environments.
+
+### 1. Using Docker Compose (Recommended)
+
+Start the application with a single command:
+
+```bash
+docker compose up --build
+```
+
+- **Jupyter URL:** Open [http://localhost:8888](http://localhost:8888) in your browser.
+- **Database Persistence:** History database (`data/history.db`) is mounted from host to retain past sessions.
+- **Ollama Connectivity:** Container automatically maps `host.docker.internal` to connect with Ollama running on your host machine (`OLLAMA_HOST=http://host.docker.internal:11434`).
+
+To stop the container:
+```bash
+docker compose down
+```
+
+### 2. Using Standalone Docker CLI
+
+Build the Docker image:
+```bash
+docker build -t ai-code-planner .
+```
+
+Run the container:
+```bash
+docker run -d \
+  -p 8888:8888 \
+  -v "$(pwd)/data:/app/data" \
+  --add-host=host.docker.internal:host-gateway \
+  --env-file .env \
+  --name ai_code_planner \
+  ai-code-planner
 ```
 
 ---

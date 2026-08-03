@@ -1,0 +1,18 @@
+services:
+  ai-code-planner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_code_planner
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    environment:
+      # Allows containerized app to connect to Ollama service running on the host machine
+      - OLLAMA_HOST=${OLLAMA_HOST:-http://host.docker.internal:11434}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

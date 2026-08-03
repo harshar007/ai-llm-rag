@@ -1,0 +1,13 @@
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.git
+.gitignore
+.env
+.idea
+.vscode
+data/*.db
+*.db-journal
+exported_plan*.md
